@@ -1,3 +1,11 @@
+# Reactの練習でブラックジャックを作ってみる会
+
+See also https://qiita.com/hirossyi73/items/cf8648c31898216312e5
+
+
+以下は create-react-app のデフォルト
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
