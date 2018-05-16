@@ -8,7 +8,9 @@ export default class ResultItem extends Component {
   render() {
     return (
       <li>
-        hoge
+        <div className="name"> name: {this.props.name} </div>
+        <div className="result"> result: {this.props.result} </div>
+        <div className="date"> {this.props.date} </div>
       </li>
     );
   }
