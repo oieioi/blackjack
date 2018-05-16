@@ -17,21 +17,27 @@ export default class Battle extends Component {
 
   // 勝負を開始する
   start(){
-    const battle = new BattleModel();
     const cards = new Cards();
     const dealer = new Dealer();
     const player = new Player();
-    // カードを2枚づつ引く
+    const battle = new BattleModel({cards, dealer, player});
+
     this.setState(Object.assign(this.state, {cards, dealer, player, battle}));
   }
 
   // カードを引く
   hit(){
+    const battle = new BattleModel(this.state.battle);
+    battle.hit();
+    this.setState(Object.assign(this.state, {battle}));
   }
 
 
   // 勝負する
   stand(){
+    const battle = new BattleModel(this.state.battle);
+    battle.stand();
+    this.setState(Object.assign(this.state, {battle}));
   }
 
 
