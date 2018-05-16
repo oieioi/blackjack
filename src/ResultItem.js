@@ -6,11 +6,14 @@ export default class ResultItem extends Component {
   }
 
   render() {
+    const yours = this.props.yours.map(c => <li>{c.suit}:{c.number}</li>)
+    const dealers = this.props.dealers.map(c => <li>{c.suit}:{c.number}</li>)
     return (
       <li>
-        <div className="name"> name: {this.props.name} </div>
-        <div className="result"> result: {this.props.result} </div>
         <div className="date"> {this.props.date} </div>
+        <div className="result"> result: {this.props.result} </div>
+        yours: <ul>{yours}</ul>
+        dealers: <ul>{dealers}</ul>
       </li>
     );
   }

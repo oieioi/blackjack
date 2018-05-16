@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+import Cards from './models/Cards';
 
 export default class Battle extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      // 山札
+      cards: null,
       dealers: [
         {suit: "h", number: "1"}
       ],
@@ -15,8 +18,10 @@ export default class Battle extends Component {
 
   // 勝負を開始する
   start(){
-    alert('start');
+    const cards = new Cards();
+    console.log(cards);
     // カードを2枚づつ引く
+    this.setState(Object.assign(this.state, {cards: cards}));
   }
 
   // カードを引く
@@ -45,9 +50,9 @@ export default class Battle extends Component {
           your hands:<ul>{yourCards}</ul>
         </div>
         <h3>operation</h3>
-        <button onClick={this.start}>start!!</button>
-        <button onClick={this.hit}>Hit!!</button>
-        <button onClick={this.stand}>Stand!!</button>
+        <button onClick={this.start.bind(this)}>start!!</button>
+        <button onClick={this.hit.bind(this)}>Hit!!</button>
+        <button onClick={this.stand.bind(this)}>Stand!!</button>
       </div>
     );
   }

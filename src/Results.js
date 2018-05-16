@@ -6,8 +6,22 @@ export default class Results extends Component {
     super(props);
     this.state = {
       items: [
-        {name: 'a', result: 'win', date: '2018-05-16T18:44:00'},
-        {name: 'b', result: 'lose', date: '2018-05-16T18:44:00'}
+        {
+          result: 'win',
+          date: '2018-05-16T18:44:00',
+          dealers:[
+            {suit: 'h', number: 1},
+            {suit: 'c', number: 3},
+            {suit: 's', number: 2},
+            {suit: 'd', number: 1},
+          ],
+          yours: [
+            {suit: 'h', number: 1},
+            {suit: 'c', number: 3},
+            {suit: 's', number: 2},
+            {suit: 'd', number: 1},
+         ]
+        },
       ]
     };
   }
@@ -21,6 +35,8 @@ export default class Results extends Component {
       name={item.name}
       result={item.result}
       date={item.date}
+      yours={item.yours}
+      dealers={item.dealers}
     />)
     return (
       <div className="results">
