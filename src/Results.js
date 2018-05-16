@@ -31,12 +31,13 @@ export default class Results extends Component {
   }
 
   render() {
-    const items = this.state.items.map(item => <ResultItem
+    const items = this.state.items.map((item, i) => <ResultItem
       name={item.name}
       result={item.result}
       date={item.date}
       yours={item.yours}
       dealers={item.dealers}
+      key={i}
     />)
     return (
       <div className="results">

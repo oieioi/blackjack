@@ -1,34 +1,32 @@
 import React, { Component } from 'react';
 import Cards from './models/Cards';
+import Dealer from './models/Dealer';
+import Player from './models/Player';
+import BattleModel from './models/Battle';
 
 export default class Battle extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // 山札
-      cards: null,
-      dealers: [
-        {suit: "h", number: "1"}
-      ],
-      yours: [
-        {suit: "c", number: "1"}
-      ]
+      battle: new BattleModel(),
+      cards: new Cards(),
+      dealer: new Dealer(),
+      player: new Player()
     };
   }
 
   // 勝負を開始する
   start(){
+    const battle = new BattleModel();
     const cards = new Cards();
-    console.log(cards);
+    const dealer = new Dealer();
+    const player = new Player();
     // カードを2枚づつ引く
-    this.setState(Object.assign(this.state, {cards: cards}));
+    this.setState(Object.assign(this.state, {cards, dealer, player, battle}));
   }
 
   // カードを引く
   hit(){
-    alert('you will hit!');
-    // 自身のカードに追加
-    alert('I will hit!');
   }
 
 
@@ -38,16 +36,21 @@ export default class Battle extends Component {
 
 
   render() {
-    const dealerCards = this.state.dealers.map((card)=> <li>{card.suit}:{card.number}</li>)
-    const yourCards = this.state.yours.map((card)=> <li>{card.suit}:{card.number}</li>)
+    const cards = this.state.cards.map((card, i)=> <li key={i}>{card.to_s()}</li>)
+    const dealerCards = this.state.dealer.cards.map((card, i)=> <li key={i}>{card.suit}:{card.number}</li>)
+    const yourCards = this.state.player.cards.map((card, i)=> <li key={i}>{card.suit}:{card.number}</li>)
     return (
       <div className="battle">
         <h2>Black Jack Battle</h2>
+        <div className="battle-cards">
+          山札
+          <ul>{cards}</ul>
+        </div>
         <div className="dealer_hands">
           dealer hands:<ul>{dealerCards}</ul>
         </div>
         <div className="your_hands">
-          your hands:<ul>{yourCards}</ul>
+          player hands:<ul>{yourCards}</ul>
         </div>
         <h3>operation</h3>
         <button onClick={this.start.bind(this)}>start!!</button>
