@@ -3,6 +3,7 @@ import Cards from './models/Cards';
 import Dealer from './models/Dealer';
 import Player from './models/Player';
 import BattleModel from './models/Battle';
+import CardView from './Card';
 
 export default class Battle extends Component {
   constructor(props) {
@@ -42,9 +43,9 @@ export default class Battle extends Component {
 
 
   render() {
-    const cards = this.state.cards.map((card, i)=> <li key={i}>{card.to_s()}</li>)
-    const dealerCards = this.state.dealer.cards.map((card, i)=> <li key={i}>{card.suit}:{card.number}</li>)
-    const yourCards = this.state.player.cards.map((card, i)=> <li key={i}>{card.suit}:{card.number}</li>)
+    const cards       = this.state.cards.map((card, i)=> <CardView card={card}/>)
+    const dealerCards = this.state.dealer.cards.map((card, i)=> <CardView card={card}/>)
+    const yourCards   = this.state.player.cards.map((card, i)=> <CardView card={card}/>)
     return (
       <div className="battle">
         <h2>Black Jack Battle</h2>

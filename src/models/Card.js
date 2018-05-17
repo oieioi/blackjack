@@ -1,5 +1,10 @@
-// 山札
-export default class Card {
+export default class {
+
+  constructor({suit, number}){
+    this.raw_suit = suit;
+    this.number = Number(number);
+    this.opened = false;
+  }
 
   suit_master(){
     return {
@@ -8,12 +13,6 @@ export default class Card {
       's': 'spade',
       'd': 'diamond',
     };
-  }
-
-  constructor(suit, number){
-    this.raw_suit = suit;
-    this.number = Number(number);
-    this.opened = false;
   }
 
   // カードを開く
