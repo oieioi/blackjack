@@ -4,14 +4,6 @@ import _ from 'lodash';
 // 山札
 export default class Cards {
 
-  forEach(iterator) {
-    this.cards.forEach(iterator)
-  }
-
-  map(iterator){
-    return this.cards.map(iterator);
-  }
-
   constructor(){
     // スート
     this.suits = [
@@ -53,5 +45,12 @@ export default class Cards {
     const card = this.cards.shift();
     this.cards.push(card);
     return card;
+  }
+
+  toJSON() {
+    return {
+      decks: this.map(c => c.toJSON()),
+      trashs: this.map(c => c.toJSON()),
+    }
   }
 }

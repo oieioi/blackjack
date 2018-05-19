@@ -37,4 +37,12 @@ export default class {
   to_s() {
     return `${this.suit()}: ${this.rank()}`
   }
+
+  toJSON(){
+    return {
+      suit: this.raw_suit,
+      numebr: this.number,
+      opened: this.opened,
+    }
+  }
 }
