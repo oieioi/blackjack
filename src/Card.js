@@ -4,11 +4,10 @@ import CardModel from './models/Card';
 export default class Card extends Component {
 
   render() {
-    const card = new CardModel(this.props.card.toJSON());
     return (
-      <li class="card" key={card.suit() + '-' + card.rank()}>
-        <div class="card-suit">{card.suit()}</div>
-        <div class="card-rank">{card.rank()}</div>
+      <li class="card" key={this.props.suit + '-' + this.props.number}>
+        <div class="card-suit">{this.props.suit}</div>
+        <div class="card-rank">{this.props.rank}</div>
       </li>
     );
   }

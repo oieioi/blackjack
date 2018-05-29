@@ -1,60 +1,65 @@
 import React, { Component } from 'react';
-import Cards from './models/Cards';
-//import Dealer from './models/Dealer';
-//import Player from './models/Player';
-//import BattleModel from './models/Battle';
-import CardView from './Card';
+import BattleAPI from './lib/Battle';
+import Player from './Player';
+import Dealer from './Dealer';
 
 export default class Battle extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      battle: {},
-      cards: [],
-      dealer: [],
-      player: [],
+      id: 0,
+      turn: 0,
+      untrashed: [],
+      dealer: {
+        cards: [],
+      },
+      players: [
+        {
+          id: 0,
+          cards: [],
+          action: null,
+          result: null,
+        }
+      ],
+      state: 'doing',
     };
   }
 
   // 勝負を開始する
-  start(){
-    const cards = new Cards(this.state.cards);
-    this.setState(Object.assign(this.state, {cards: cards.toJSON()}))
+  async start(){
+    const battle = await BattleAPI.create();
+    this.setState(battle)
   }
 
   // カードを引く
-  hit(){
+  async hit(playerId){
+    const battle = await BattleAPI.hit(this.state.id, playerId);
+    this.setState(battle);
   }
 
 
   // 勝負する
-  stand(){
+  async stand(playerId){
+    const battle = await BattleAPI.stand(this.state.id, playerId);
+    this.setState(battle);
   }
 
 
   render() {
-    const cards       = this.state.cards.map((card, i)=> <CardView card={card}/>)
-    const dealerCards = this.state.dealer.map((card, i)=> <CardView card={card}/>)
-    const yourCards   = this.state.player.map((card, i)=> <CardView card={card}/>)
+    const players = this.state.players.map(p => <Player
+      id={p.id}
+      cards={p.cards}
+      action={p.action}
+      result={p.result}
+      hit={ ()=> this.hit(p.id) }
+      stand={ ()=>this.stand(p.id) }
+    />)
     return (
       <div className="battle">
         <h2>Black Jack Battle</h2>
-        <div className="battle-cards">
-          deck: {this.state.cards.length}
-          <ul>{cards}</ul>
-        </div>
-        <div className="dealer_hands">
-          dealer: {this.state.dealer.length}
-          <ul>{dealerCards}</ul>
-        </div>
-        <div className="your_hands">
-          player: {this.state.player.length}
-          <ul>{yourCards}</ul>
-        </div>
-        <h3>operation</h3>
-        <button onClick={this.start.bind(this)}>start!!</button>
-        <button onClick={this.hit.bind(this)}>Hit!!</button>
-        <button onClick={this.stand.bind(this)}>Stand!!</button>
+        <div className="battle-cards"> untrashed.length : {this.state.untrashed.length} </div>
+        <Dealer cards={this.state.dealer.cards} />
+        {players}
       </div>
     );
   }
