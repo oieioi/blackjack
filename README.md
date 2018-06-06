@@ -1,14 +1,16 @@
 # Reactの練習でブラックジャックを作ってみる会
 
+![https://i.gyazo.com/6c5a0dd09c5efce481925cf018c37b4b.gif](https://i.gyazo.com/6c5a0dd09c5efce481925cf018c37b4b.gif)
+
 ## start
 
-npm install
-npm start
+    npm install
+    npm start
 
 
 ## 設計
 
-以下のようなWeb APIを想定する
+以下のようなWeb APIを想定したけどJSで実装した
 
 - POST /battles
     - リクエスト player 数
