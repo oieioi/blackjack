@@ -6,11 +6,10 @@ import CardUtil from './CardUtil';
 // battleを作成
 const create = async () => {
     const count = Number(localStorage.getItem('count') || 0);
-    const nextCount = count + 1;
-    localStorage.setItem('count', nextCount);
+    localStorage.setItem('count', count + 1);
 
     const battle = {
-        id: count + 1,
+        id: count,
         turn: 0,
         untrashed: CardUtil.shuffled(),
         dealer: {
@@ -39,53 +38,58 @@ const get = async (battleId) => {
     return new Promise(resolve => resolve(JSON.parse(battle)));
 }
 
-// @private
-// ターンを終える
-const turnEnd = async (battleId) => {
-    let battle = await get(battleId);
-    // プレイヤーたちのカードをめくる
-    battle.players.forEach(p => {
-        if (p.state === 'hit') {
-            const news = CardUtil.hit(battle.untrashed, p.cards);
-            battle.untrashed = news.stock;
-            p.cards = news.hand;
-        }
-    })
-    // ディーラーのカードをめくる
-    const dealerNews = CardUtil.hit(battle.untrashed, battle.dealer.cards);
-    battle.untrashed = dealerNews.stock;
-    battle.dealer.cards = dealerNews.hand;
-
-    // ターンをインクリメント
-    battle.turn++;
-    // 勝敗チェック
-}
 
 // @public
 // カードを引く
 const hit = async (battleId, playerId) => {
-    return await setPlayerState(battleId, playerId, 'hit');
+    let battle = await get(battleId);
+    let player = battle.players.find(p => p.id === Number(playerId));
+
+    // プレイヤーのカードをめくる
+    const news = CardUtil.hit(battle.untrashed, player.cards);
+    battle.untrashed = news.stock;
+    player.cards = news.hand;
+
+    localStorage.setItem(battleId, JSON.stringify(battle));
+
+    return new Promise(resolve => resolve(battle));
 }
 
 // @public
 // カードを引かない
 const stand = async (battleId, playerId) => {
-    return await setPlayerState(battleId, playerId, 'stand');
-}
-
-// @private
-const setPlayerState = async (battleId, playerId, state) => {
     let battle = await get(battleId);
     let player = battle.players.find(p => p.id === Number(playerId));
-    player.action = state;
+
+    player.action = 'stand';
 
     localStorage.setItem(battleId, JSON.stringify(battle));
 
     // ターン終了処理
-    if (turnEnd(battleId)) {
-        battle.state = 'done';
+    if(shouldEnd(battleId)) {
+        return dealerAction(battleId);
+    } else {
+      return new Promise(resolve => resolve(battle));
+    }
+}
+
+// @private
+// 全員スタンドしたか
+const shouldEnd = async (battleId) => {
+    let battle = await get(battleId);
+    return battle.players.filter(p => p.state === 'stand').length === battle.players.length;
+}
+
+const dealerAction = async (battleId) => {
+    let battle = await get(battleId);
+
+    while(CardUtil.burst(battle.dealer.cards)) {
+        const news = CardUtil.hit(battle.untrashed, battle.dealer.cards);
+        battle.untrashed = news.stock;
+        battle.dealer.cards = news.hand;
     }
 
+    localStorage.setItem(battleId, JSON.stringify(battle));
     return new Promise(resolve => resolve(battle));
 }
 

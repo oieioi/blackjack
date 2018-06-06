@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Results from './Results';
 import Battle from './Battle';
 
 class App extends Component {
@@ -7,7 +6,6 @@ class App extends Component {
     return (
       <div className="App">
         <Battle />
-        <Results />
       </div>
     );
   }

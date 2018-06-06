@@ -60,7 +60,8 @@ export default class Battle extends Component {
       <div className="battle">
         <h2>Black Jack Battle</h2>
         <div className="battle-cards"> stock : {this.state.untrashed.length}
-          <Cards cards={this.state.untrashed} />
+          {//<Cards cards={this.state.untrashed} />
+          }
         </div>
         <button onClick={this.start.bind(this)}>start battle!!</button>
         <Dealer cards={this.state.dealer.cards} />
