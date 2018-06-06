@@ -7,26 +7,50 @@ import CardUtil from './CardUtil';
 const create = async () => {
     const count = Number(localStorage.getItem('count') || 0);
     localStorage.setItem('count', count + 1);
+    let stock = CardUtil.shuffled();
+    let players = [
+        {
+            id: 0,
+            cards: [],
+            action: null,
+            result: null,
+        }
+    ];
+
+    let dealer = {
+        cards: [],
+    }
+
+    // 初期カード配る
+    // FIXME: 汚い
+    players.forEach((p)=>{
+        const news = CardUtil.hit(stock, p.cards);
+        stock = news.stock;
+        p.cards = news.hand;
+
+        const news2 = CardUtil.hit(stock, p.cards);
+        stock = news2.stock;
+        p.cards = news2.hand;
+    });
+
+    const news = CardUtil.hit(stock, dealer.cards);
+    stock = news.stock;
+    dealer.cards = news.hand;
+
+    const news2 = CardUtil.hit(stock, dealer.cards);
+    stock = news2.stock;
+    dealer.cards = news2.hand;
 
     const battle = {
         id: count,
         turn: 0,
-        untrashed: CardUtil.shuffled(),
-        dealer: {
-            cards: [],
-        },
-        players: [
-            {
-                id: 0,
-                cards: [],
-                action: null,
-                result: null,
-            }
-        ],
+        untrashed: stock,
+        dealer: dealer,
+        players: players,
         state: 'doing',
     }
 
-    localStorage.setItem(count, JSON.stringify(battle));
+    localStorage.setItem(battle.id, JSON.stringify(battle));
 
     return new Promise(resolve => resolve(battle));
 };
@@ -69,7 +93,7 @@ const stand = async (battleId, playerId) => {
     if(shouldEnd(battleId)) {
         return dealerAction(battleId);
     } else {
-      return new Promise(resolve => resolve(battle));
+        return new Promise(resolve => resolve(battle));
     }
 }
 
@@ -80,6 +104,8 @@ const shouldEnd = async (battleId) => {
     return battle.players.filter(p => p.state === 'stand').length === battle.players.length;
 }
 
+// @private
+// ディーラーがカードを引く
 const dealerAction = async (battleId) => {
     let battle = await get(battleId);
 
