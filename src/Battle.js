@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import BattleAPI from './lib/Battle';
+import BattleAPI from './lib/BattleAPI';
 import Player from './Player';
 import Dealer from './Dealer';
+import Cards from './Cards';
 
 export default class Battle extends Component {
   constructor(props) {
@@ -53,11 +54,15 @@ export default class Battle extends Component {
       result={p.result}
       hit={ ()=> this.hit(p.id) }
       stand={ ()=>this.stand(p.id) }
+      key={p.id}
     />)
     return (
       <div className="battle">
         <h2>Black Jack Battle</h2>
-        <div className="battle-cards"> untrashed.length : {this.state.untrashed.length} </div>
+        <div className="battle-cards"> stock : {this.state.untrashed.length}
+          <Cards cards={this.state.untrashed} />
+        </div>
+        <button onClick={this.start.bind(this)}>start battle!!</button>
         <Dealer cards={this.state.dealer.cards} />
         {players}
       </div>
