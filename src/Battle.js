@@ -21,7 +21,7 @@ export default class Battle extends Component {
           result: null,
         }
       ],
-      state: 'doing',
+      state: 'yet',
     };
   }
 
@@ -54,6 +54,7 @@ export default class Battle extends Component {
       hit={ ()=> this.hit(p.id) }
       stand={ ()=>this.stand(p.id) }
       key={p.id}
+      doing={this.state.state === 'doing'}
     />)
     return (
       <div className="battle">

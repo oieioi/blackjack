@@ -74,6 +74,11 @@ const hit = async (battleId, playerId) => {
     battle.untrashed = news.stock;
     player.cards = news.hand;
 
+    if (CardUtil.calcPoint(player.cards) > 21) {
+        // まけ
+        player.result = 'lose'
+    }
+
     localStorage.setItem(battleId, JSON.stringify(battle));
 
     return new Promise(resolve => resolve(battle));
@@ -89,12 +94,28 @@ const stand = async (battleId, playerId) => {
 
     localStorage.setItem(battleId, JSON.stringify(battle));
 
-    // ターン終了処理
-    if(shouldEnd(battleId)) {
-        return dealerAction(battleId);
-    } else {
+    if(!shouldEnd(battleId)) {
         return new Promise(resolve => resolve(battle));
     }
+
+
+    // ターン終了処理
+    const battleResult = await dealerAction(battleId);
+    const dealerPoint = CardUtil.calcPoint(battleResult.dealer.cards);
+
+    // FIXME: 勝利判定
+    battleResult.players.forEach((p) => {
+        const playerPoint = CardUtil.calcPoint(p.cards);
+
+        if      (playerPoint > 21) p.result = 'lose'
+        else if (dealerPoint > 21) p.result = 'win'
+        else if (dealerPoint >= playerPoint) p.result = 'lose'
+        else p.result = 'win'
+    });
+
+    localStorage.setItem(battleId, JSON.stringify(battleResult));
+    return new Promise(resolve => resolve(battleResult));
+
 }
 
 // @private
