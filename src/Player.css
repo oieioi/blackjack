@@ -1,0 +1,9 @@
+.player {
+  clear: both; }
+  .player__result {
+    font-weight: bold;
+    font-size: 20px; }
+    .player__result--win {
+      color: #00ff00; }
+    .player__result--lose {
+      color: #ff00ff; }

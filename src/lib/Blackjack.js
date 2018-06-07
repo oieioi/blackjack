@@ -13,7 +13,7 @@ const shuffled = () => {
   const raw_cards = SUITS.map((suit)=>{
     const cards = [];
     for(let i = 1; i <= 13; i++){
-      cards.push({suit: suit, rank: i})
+      cards.push({suit: suit, rank: i, closed: true})
     }
     return cards;
   }).reduce((memo, cs)=> {
@@ -24,15 +24,19 @@ const shuffled = () => {
   return _.shuffle(raw_cards);
 }
 
+// (破壊的に)山札からカードをめくり、手札に追加する
 // @public
 // @params stock [Array] 山札
 // @params hand [Array] 手札
+// @params open [Boolean] 手札を場にopenにするか
 // @params destructive [Boolean] 受け取った山札と手札を破壊するか
 // @return [Object] hand, stock stockから一枚引き、handに一枚加えた配列
-const hit = (stock, hand, destructive = false) => {
+const hit = (stock, hand, open, destructive = true) => {
   const hitted = _.sample(stock);
   const newStock = _.reject(stock, c => _.isEqual(hitted, c))
   const newHand = hand.concat(hitted);
+
+  hitted.closed = !open
 
   if (destructive) {
     hand.push(hitted);

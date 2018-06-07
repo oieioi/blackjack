@@ -1,6 +1,6 @@
 # Reactの練習でブラックジャックを作ってみる会
 
-![https://i.gyazo.com/6c5a0dd09c5efce481925cf018c37b4b.gif](https://i.gyazo.com/6c5a0dd09c5efce481925cf018c37b4b.gif)
+[Demo](http://oieioi.github.io/blackjack/index.html)
 
 ## start
 

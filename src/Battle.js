@@ -7,7 +7,7 @@ export default class Battle extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: 0,
+      id: null,
       turn: 0,
       untrashed: [],
       dealer: {
@@ -58,12 +58,9 @@ export default class Battle extends Component {
     />)
     return (
       <div className="battle">
-        <h2>Black Jack Battle</h2>
-        <div className="battle-cards"> stock : {this.state.untrashed.length}
-          {//<Cards cards={this.state.untrashed} />
-          }
-        </div>
+        <h2>Blackjack !</h2>
         <button onClick={this.start.bind(this)}>start battle!!</button>
+        <div className="battle-cards"> battleID : {this.state.id} </div>
         <Dealer cards={this.state.dealer.cards} />
         {players}
       </div>

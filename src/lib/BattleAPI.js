@@ -29,7 +29,7 @@ const create = async () => {
     });
 
     Blackjack.hit(stock, dealer.cards, true);
-    Blackjack.hit(stock, dealer.cards, true);
+    Blackjack.hit(stock, dealer.cards, false);
 
     const battle = {
         id: count,
@@ -117,6 +117,8 @@ const shouldEnd = async (battleId) => {
 // ディーラーがカードを引く
 const dealerAction = async (battleId) => {
     let battle = await get(battleId);
+
+    battle.dealer.cards.forEach(c => c.closed = false);
 
     while(Blackjack.shouldHit(battle.dealer.cards)) {
         Blackjack.hit(battle.untrashed, battle.dealer.cards, true);
