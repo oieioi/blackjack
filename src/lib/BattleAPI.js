@@ -1,4 +1,4 @@
-import CardUtil from './CardUtil';
+import Blackjack from './Blackjack';
 
 // Web APIのダミーっぽい感じで
 
@@ -7,7 +7,7 @@ import CardUtil from './CardUtil';
 const create = async () => {
     const count = Number(localStorage.getItem('count') || 0);
     localStorage.setItem('count', count + 1);
-    let stock = CardUtil.shuffled();
+    let stock = Blackjack.shuffled();
     let players = [
         {
             id: 0,
@@ -24,22 +24,12 @@ const create = async () => {
     // 初期カード配る
     // FIXME: 汚い
     players.forEach((p)=>{
-        const news = CardUtil.hit(stock, p.cards);
-        stock = news.stock;
-        p.cards = news.hand;
-
-        const news2 = CardUtil.hit(stock, p.cards);
-        stock = news2.stock;
-        p.cards = news2.hand;
+        Blackjack.hit(stock, p.cards, true);
+        Blackjack.hit(stock, p.cards, true);
     });
 
-    const news = CardUtil.hit(stock, dealer.cards);
-    stock = news.stock;
-    dealer.cards = news.hand;
-
-    const news2 = CardUtil.hit(stock, dealer.cards);
-    stock = news2.stock;
-    dealer.cards = news2.hand;
+    Blackjack.hit(stock, dealer.cards, true);
+    Blackjack.hit(stock, dealer.cards, true);
 
     const battle = {
         id: count,
@@ -70,11 +60,9 @@ const hit = async (battleId, playerId) => {
     let player = battle.players.find(p => p.id === Number(playerId));
 
     // プレイヤーのカードをめくる
-    const news = CardUtil.hit(battle.untrashed, player.cards);
-    battle.untrashed = news.stock;
-    player.cards = news.hand;
+    Blackjack.hit(battle.untrashed, player.cards, true);
 
-    if (CardUtil.calcPoint(player.cards) > 21) {
+    if (Blackjack.bursted(player.cards)) {
         // まけ
         player.result = 'lose'
     }
@@ -101,21 +89,21 @@ const stand = async (battleId, playerId) => {
 
     // ターン終了処理
     const battleResult = await dealerAction(battleId);
-    const dealerPoint = CardUtil.calcPoint(battleResult.dealer.cards);
+    const dealer = battleResult.dealer;
+    const dealerPoint = Blackjack.calcPoint(battleResult.dealer.cards);
 
     // FIXME: 勝利判定
-    battleResult.players.forEach((p) => {
-        const playerPoint = CardUtil.calcPoint(p.cards);
+    battleResult.players.forEach((player) => {
+        const playerPoint = Blackjack.calcPoint(player.cards);
 
-        if      (playerPoint > 21) p.result = 'lose'
-        else if (dealerPoint > 21) p.result = 'win'
-        else if (dealerPoint >= playerPoint) p.result = 'lose'
-        else p.result = 'win'
+        if      (Blackjack.bursted(player.cards)) player.result = 'lose'
+        else if (Blackjack.bursted(dealer.cards)) player.result = 'win'
+        else if (dealerPoint >= playerPoint)     player.result = 'lose'
+        else player.result = 'win'
     });
 
     localStorage.setItem(battleId, JSON.stringify(battleResult));
     return new Promise(resolve => resolve(battleResult));
-
 }
 
 // @private
@@ -130,10 +118,8 @@ const shouldEnd = async (battleId) => {
 const dealerAction = async (battleId) => {
     let battle = await get(battleId);
 
-    while(CardUtil.burst(battle.dealer.cards)) {
-        const news = CardUtil.hit(battle.untrashed, battle.dealer.cards);
-        battle.untrashed = news.stock;
-        battle.dealer.cards = news.hand;
+    while(Blackjack.shouldHit(battle.dealer.cards)) {
+        Blackjack.hit(battle.untrashed, battle.dealer.cards, true);
     }
 
     localStorage.setItem(battleId, JSON.stringify(battle));

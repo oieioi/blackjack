@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Cards from './Cards';
-import CardUtil from './lib/CardUtil';
+import Blackjack from './lib/Blackjack';
 
 export default class Player extends Component {
 
@@ -9,7 +9,7 @@ export default class Player extends Component {
     return (
       <div className="player">
         <h3>Player:{this.props.id}</h3>
-        <div className="player--score">score: {CardUtil.calcPoint(this.props.cards)}</div>
+        <div className="player--score">score: {Blackjack.calcPoint(this.props.cards)}</div>
         <div className="player--result">result: {this.props.result || 'doing'}</div>
         <Cards cards={this.props.cards} />
         <button onClick={this.props.hit} disabled={!doing}>hit</button>

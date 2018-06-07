@@ -7,6 +7,8 @@ const SUITS = [
   's',
 ];
 
+// @public
+// @return [Array] シャッフルしたカードオブジェクトの配列
 const shuffled = () => {
   const raw_cards = SUITS.map((suit)=>{
     const cards = [];
@@ -22,14 +24,28 @@ const shuffled = () => {
   return _.shuffle(raw_cards);
 }
 
-const hit = (stock, hand) => {
+// @public
+// @params stock [Array] 山札
+// @params hand [Array] 手札
+// @params destructive [Boolean] 受け取った山札と手札を破壊するか
+// @return [Object] hand, stock stockから一枚引き、handに一枚加えた配列
+const hit = (stock, hand, destructive = false) => {
   const hitted = _.sample(stock);
   const newStock = _.reject(stock, c => _.isEqual(hitted, c))
   const newHand = hand.concat(hitted);
-  
+
+  if (destructive) {
+    hand.push(hitted);
+    const index = stock.findIndex( c => _.isEqual(c, hitted));
+    stock.splice(index, 1);
+  }
+
   return {stock: newStock, hand: newHand}
 }
 
+// @public
+// @params hand [Array] 手札
+// @return [Number] ブラックジャックのポイント
 const calcPoint = (hand) => {
   if (hand.length === 0) return 0;
 
@@ -74,10 +90,11 @@ const calcPoint = (hand) => {
   }
 }
 
-const burst = (hand) => {
-  const point = calcPoint(hand);
+// @public
+// @params [Array] hand 手札
+// @return [Boolean] ディーラーが手札を引くか否か
+const shouldHit = (hand) => calcPoint(hand) < 17;
 
-  return point < 17;
-}
+const bursted = (hand) => calcPoint(hand) > 21;
 
-export default {shuffled, hit, burst, calcPoint}
+export default {shuffled, hit, shouldHit, calcPoint, bursted}
