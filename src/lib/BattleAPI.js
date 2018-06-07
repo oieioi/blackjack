@@ -90,16 +90,10 @@ const stand = async (battleId, playerId) => {
     // ターン終了処理
     const battleResult = await dealerAction(battleId);
     const dealer = battleResult.dealer;
-    const dealerPoint = Blackjack.calcPoint(battleResult.dealer.cards);
 
-    // FIXME: 勝利判定
+    // 勝利判定
     battleResult.players.forEach((player) => {
-        const playerPoint = Blackjack.calcPoint(player.cards);
-
-        if      (Blackjack.bursted(player.cards)) player.result = 'lose'
-        else if (Blackjack.bursted(dealer.cards)) player.result = 'win'
-        else if (dealerPoint >= playerPoint)     player.result = 'lose'
-        else player.result = 'win'
+        player.result = Blackjack.getResult(player.cards, dealer.cards);
     });
 
     localStorage.setItem(battleId, JSON.stringify(battleResult));

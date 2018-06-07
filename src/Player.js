@@ -26,6 +26,8 @@ export default class Player extends Component {
 
     if (result === 'lose') return <div className="player__result player__result--lose">You lose! </div>;
 
+    if (result === 'draw') return <div className="player__result player__result--draw">You draw! </div>;
+
     return '';
   }
 }
