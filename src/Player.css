@@ -7,6 +7,9 @@
     width: 100px;
     padding: 10px;
     cursor: pointer; }
+    .player__operations-button:disabled {
+      cursor: not-allowed;
+      background-color: #ddd; }
     .player__operations-button--hit {
       color: white;
       background-color: blue; }

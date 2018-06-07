@@ -8,6 +8,10 @@
       width: 100px;
       padding: 10px;
       cursor: pointer;
+      &:disabled{
+        cursor: not-allowed;
+        background-color: #ddd;
+      }
       &--hit {
         color: white;
         background-color: blue;
