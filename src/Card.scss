@@ -8,7 +8,9 @@
   height: 100px;
   margin: 10px;
   list-style: none;
+  border-radius: 5px;
   &__content {
+    border-radius: 5px;
     &--opend {
     }
     &--closed {

@@ -1,13 +1,39 @@
 .player {
   clear: both;
+  &__operations {
+    &-button {
+      font-size: 1.5em;
+      margin: 5px;
+      border-radius: 5px;
+      width: 100px;
+      padding: 10px;
+      cursor: pointer;
+      &--hit {
+        color: white;
+        background-color: blue;
+      }
+      &--stand {
+        color: white;
+        background-color: red;
+      }
+    }
+  }
   &__result {
     font-weight: bold;
-    font-size: 20px;
+    font-size: 3em;
+    display: inline;
+    padding: 10px;
     &--win {
       color: #00ff00;
+      background-color: #ff00ff;
     }
     &--lose {
       color: #ff00ff;
+      background-color: #00ff00;
+    }
+    &--draw {
+      color: white ;
+      background-color: black;
     }
   }
 }

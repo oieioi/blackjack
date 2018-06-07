@@ -11,9 +11,18 @@ export default class Player extends Component {
     return (
       <div className="player">
         <h3 className="player__name">You</h3>
-        <button onClick={this.props.hit} disabled={!doing}>hit</button>
-        <button onClick={this.props.stand} disabled={!doing}>stand</button>
+        <div className="player__operations">
+          <button
+            className="player__operations-button player__operations-button--hit"
+            onClick={this.props.hit}
+            disabled={!doing}>Hit</button>
+          <button
+            className="player__operations-button player__operations-button--stand"
+            onClick={this.props.stand}
+            disabled={!doing}>Stand</button>
+        </div>
         <div className="player__score">score: {Blackjack.calcPoint(this.props.cards)}</div>
+
         {result}
         <Cards cards={this.props.cards} />
       </div>
