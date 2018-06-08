@@ -122,4 +122,17 @@ const dealerAction = async (battleId) => {
     return new Promise(resolve => resolve(battle));
 }
 
-export default {create, get, hit, stand}
+const index = async () => {
+    const max = Number(localStorage.getItem('count') || 0);
+    let count = 0;
+    const all = [];
+    while (max > count) {
+        const battle = await get(count);
+        all.push(battle)
+        count++;
+    }
+    return new Promise(resolve => resolve(all))
+}
+
+export default {create, index, get, hit, stand}
+
