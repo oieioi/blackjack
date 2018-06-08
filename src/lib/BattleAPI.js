@@ -82,7 +82,7 @@ const stand = async (battleId, playerId) => {
 
     localStorage.setItem(battleId, JSON.stringify(battle));
 
-    if(!shouldEnd(battleId)) {
+    if(! await shouldEnd(battleId)) {
         return new Promise(resolve => resolve(battle));
     }
 
@@ -104,7 +104,7 @@ const stand = async (battleId, playerId) => {
 // 全員スタンドしたか
 const shouldEnd = async (battleId) => {
     let battle = await get(battleId);
-    return battle.players.filter(p => p.state === 'stand').length === battle.players.length;
+    return battle.players.filter(p => p.action === 'stand').length === battle.players.length;
 }
 
 // @private

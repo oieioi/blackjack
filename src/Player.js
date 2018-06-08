@@ -6,7 +6,7 @@ import './Player.css'
 export default class Player extends Component {
 
   render() {
-    const doing = this.props.doing && this.props.result == null;
+    const doing = this.props.doing && this.props.result == null && this.props.action !== 'stand';
     const result = this.getResult(this.props.result);
     return (
       <div className="player">
