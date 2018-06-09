@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import BattleAPI from './lib/BattleAPI';
 import Player from './Player';
 import Dealer from './Dealer';
+import  './Battle.css';
 
 export default class Battle extends Component {
   constructor(props) {

@@ -13,9 +13,7 @@ class App extends Component {
   }
 
   async componentDidMount() {
-    console.log(1);
     const results = await BattleAPI.index();
-    console.log(2);
     this.setState(Object.assign(this.state, {results}));
   }
 
