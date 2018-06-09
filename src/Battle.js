@@ -49,6 +49,9 @@ export default class Battle extends Component {
     this.setState(battle);
   }
 
+  async componentDidMount() {
+    await this.start();
+  }
 
   render() {
     const players = this.state.players.map(p => <Player
