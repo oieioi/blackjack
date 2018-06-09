@@ -24,8 +24,14 @@ export default class Results extends Component {
             <Summary results={this.props.results} />
           </div>
           <div className="results__all">
-            <button onClick={this.toggleShowAllResults.bind(this)}>{ this.state.shouldShowAllResults ? 'hide' : 'show' } all</button>
-            <ul className="results__all-list"> { this.state.shouldShowAllResults ? results : ''} </ul>
+            <button
+              className="results__all-button"
+              onClick={this.toggleShowAllResults.bind(this)}>
+              { this.state.shouldShowAllResults ? 'hide' : 'show' } all results
+            </button>
+            <ul className="results__all-list">
+              { this.state.shouldShowAllResults ? results : ''}
+            </ul>
           </div>
         </div>
       );

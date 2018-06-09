@@ -14,20 +14,22 @@ export default class Summary extends Component {
     })
 
     const keys = Object.keys(playersScore);
-    return keys.map(key => {
+    const summaries = keys.map(key => {
       const score = playersScore[key];
       const all = score.win + score.lose + score.draw + score.noGame;
       const rate = score.win / all
-      return <li className="results__summary-item" key={key}>
-        player {key}の勝率: {rate.toFixed(3)}
-        <ul>
-          <li>win: {playersScore[key].win}</li>
-          <li>lose: {playersScore[key].lose}</li>
-          <li>draw: {playersScore[key].draw}</li>
-          <li>no game: {playersScore[key].noGame}</li>
-        </ul>
-      </li>
+      return <li
+        className="summary__item"
+        key={key}
+        title={`win: ${playersScore[key].win}, lose: ${playersScore[key].lose}, draw: ${playersScore[key].draw}, no game: ${playersScore[key].noGame}`}
+      >
+        player {key}: {rate.toFixed(3)}
+        </li>
     })
+    return <div className="summary">
+      <h2 className="summary__rate">Rate</h2>
+      <ul className="summary__list">{summaries}</ul>
+    </div>
   }
 }
 

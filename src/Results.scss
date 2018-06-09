@@ -1,5 +1,38 @@
 .results {
   clear: both;
-  display: inline-block;
-  width: 20%;
+  position: absolute;
+  top: 0px;
+  right: 1px;
+  display: block;
+  width: 100px;
+  background: #f6f6f6;
+  padding: 10px;
+  font-size: 0.5em;
+  &__all{
+    &-button {
+      border: 1px;
+      cursor: pointer;
+    }
+    &-list {
+      padding: 0 0 0 20px;
+    }
+  }
+}
+
+.result {
+
+  &__players {
+    padding: 0 0 0 10px;
+  }
+}
+
+.summary {
+  &__list {
+    margin: 0 0 0 5px;
+    padding: 0;
+  }
+
+  &__item {
+    list-style: none;
+  }
 }
