@@ -9,6 +9,7 @@ export default class Battle extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      brainCount: 1,
       id: null,
       turn: 0,
       untrashed: [],
@@ -64,9 +65,14 @@ export default class Battle extends Component {
       key={p.id}
       doing={this.state.state === 'doing'}
     />)
+    const brains = new Array(this.state.brainCount).fill('🧠').join('')
     return (
       <div className="battle">
-        <h2><span role="img" aria-label="">👉</span> Blackjack <span role="img" aria-label="brain">🧠</span></h2>
+        <h2><span role="img" aria-label="">🐙</span>Blackjack<span
+            role="img"
+            aria-label="brain"
+            style={{cursor: 'pointer'}}
+            onClick={this.addBrain.bind(this)}>{brains}</span></h2>
         <button
           className="battle__start-button btn btn--long"
           onClick={this.start.bind(this)}
@@ -76,5 +82,9 @@ export default class Battle extends Component {
         {players}
       </div>
     );
+  }
+
+  addBrain(){
+    this.setState(Object.assign(this.state, {brainCount: this.state.brainCount + 1}))
   }
 }
