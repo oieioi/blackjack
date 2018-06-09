@@ -2,23 +2,25 @@
   clear: both;
   &__operations {
   }
-  &__result {
+  &__state {
     font-size: 1.2em;
     display: block;
     padding: 2px 10px;
-    &--win {
-      //color: #00ff00;
-      //background-color: #ff00ff;
-    }
-    &--lose {
-      //color: white ;
-      //background-color: black;
-    }
-    &--draw {
-      //color: white ;
-      //background-color: black;
-    }
-    &--yet {
+    &-result{
+      &--win {
+        //color: #00ff00;
+        //background-color: #ff00ff;
+      }
+      &--lose {
+        //color: white ;
+        //background-color: black;
+      }
+      &--draw {
+        //color: white ;
+        //background-color: black;
+      }
+      &--yet {
+      }
     }
 
     &-score {

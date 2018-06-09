@@ -7,12 +7,11 @@ export default class Player extends Component {
 
   render() {
     const doing = this.props.doing && this.props.result == null && this.props.action !== 'stand';
-    const result = this.getResult(this.props.result);
     return (
       <div className="player">
         <h3 className="player__name">You</h3>
         <div className="player__state">
-          {result}
+          {this.getState(this.props.result, this.props.cards)}
         </div>
         <div className="player__operations">
           <button
@@ -29,8 +28,8 @@ export default class Player extends Component {
     );
   }
 
-  getResult(result) {
-    const score = <span className="player__result-score">score: {Blackjack.calcPoint(this.props.cards)}</span>
+  getState(result, cards) {
+    const score = <span className="player__state-score">score: {Blackjack.calcPoint(cards)}</span>
     let emotion = '🤔';
     let message = 'Hit or Stand';
 
@@ -38,7 +37,10 @@ export default class Player extends Component {
     if (result === 'lose') {emotion = '😱'; message = 'You Lost';}
     if (result === 'draw') {emotion = '😐'; message = 'You Drew';}
 
-    return <div className="player__result player__result--yet"> <span aria-label="emoticon" role="img">{emotion}</span>{score} {message}</div>;
+    return <div className={`player__state-result player__state-result--${result}`}>
+      <span aria-label="emoticon" role="img">{emotion}</span>
+      {score} {message}
+    </div>;
   }
 }
 
