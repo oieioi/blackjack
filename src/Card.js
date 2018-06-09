@@ -5,8 +5,14 @@ export default class Card extends Component {
 
   render() {
       const cardBody = <div className="card__content card__content--opened">
-        {this.suit(this.props.suit)}
-        {this.rank(this.props.rank)}
+        <div className="card__content-item">
+          {this.suit(this.props.suit)}
+          {this.rank(this.props.rank)}
+        </div>
+        <div className="card__content-item card__content-item--reversed">
+          {this.suit(this.props.suit)}
+          {this.rank(this.props.rank)}
+        </div>
       </div>
       const content = this.props.closed ? <div className="card__content card__content--closed">&nbsp;</div> : cardBody;
     return (
@@ -21,6 +27,7 @@ export default class Card extends Component {
       h: "♥",
       c: "♣"
     };
+
     return <span className={`card__suit card__suit--${suitStr}`}>{suits[suitStr]}</span>;
   }
 
