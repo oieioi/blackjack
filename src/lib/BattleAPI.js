@@ -62,14 +62,15 @@ const hit = async (battleId, playerId) => {
     // プレイヤーのカードをめくる
     Blackjack.hit(battle.untrashed, player.cards, true);
 
+
+    // bustしたら直ちにまけ
     if (Blackjack.bursted(player.cards)) {
-        // まけ
         player.result = 'lose'
     }
 
     localStorage.setItem(battleId, JSON.stringify(battle));
 
-    return new Promise(resolve => resolve(battle));
+    return end(battleId);
 }
 
 // @public
@@ -82,29 +83,38 @@ const stand = async (battleId, playerId) => {
 
     localStorage.setItem(battleId, JSON.stringify(battle));
 
+    return end(battleId);
+}
+
+const end = async (battleId) => {
+
     if(! await shouldEnd(battleId)) {
-        return new Promise(resolve => resolve(battle));
+        return get(battleId);
     }
 
-
     // ターン終了処理
-    const battleResult = await dealerAction(battleId);
-    const dealer = battleResult.dealer;
+    // ディーラーのターン
+    const battle = await dealerAction(battleId);
 
-    // 勝利判定
-    battleResult.players.forEach((player) => {
+    battle.state = 'done';
+
+    const dealer = battle.dealer;
+
+    // プレーヤーの勝利判定
+    battle.players.forEach((player) => {
         player.result = Blackjack.getResult(player.cards, dealer.cards);
     });
 
-    localStorage.setItem(battleId, JSON.stringify(battleResult));
-    return new Promise(resolve => resolve(battleResult));
+    localStorage.setItem(battleId, JSON.stringify(battle));
+    return new Promise(resolve => resolve(battle));
+
 }
 
 // @private
 // 全員スタンドしたか
 const shouldEnd = async (battleId) => {
     let battle = await get(battleId);
-    return battle.players.filter(p => p.action === 'stand').length === battle.players.length;
+    return battle.players.filter(p => p.action === 'stand' || p.result === 'lose').length === battle.players.length;
 }
 
 // @private
