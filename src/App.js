@@ -13,6 +13,10 @@ class App extends Component {
   }
 
   async componentDidMount() {
+    await this.applyBattle();
+  }
+
+  async applyBattle(){
     const results = await BattleAPI.index();
     this.setState(Object.assign(this.state, {results}));
   }
@@ -20,7 +24,7 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-        <Battle />
+        <Battle changed={this.applyBattle.bind(this)} />
         <Results results={this.state.results}/>
       </div>
     );

@@ -29,12 +29,14 @@ export default class Battle extends Component {
   // 勝負を開始する
   async start(){
     const battle = await BattleAPI.create();
+    this.props.changed();
     this.setState(battle)
   }
 
   // カードを引く
   async hit(playerId){
     const battle = await BattleAPI.hit(this.state.id, playerId);
+    this.props.changed();
     this.setState(battle);
   }
 
@@ -42,6 +44,7 @@ export default class Battle extends Component {
   // 勝負する
   async stand(playerId){
     const battle = await BattleAPI.stand(this.state.id, playerId);
+    this.props.changed();
     this.setState(battle);
   }
 

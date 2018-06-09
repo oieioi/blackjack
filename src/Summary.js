@@ -16,7 +16,7 @@ export default class Summary extends Component {
     const keys = Object.keys(playersScore);
     const summaries = keys.map(key => {
       const score = playersScore[key];
-      const all = score.win + score.lose + score.draw + score.noGame;
+      const all = score.win + score.lose + score.draw;
       const rate = score.win / all
       return <li
         className="summary__item"
