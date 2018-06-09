@@ -31,14 +31,14 @@ export default class Player extends Component {
 
   getResult(result) {
     const score = <span className="player__result-score">score: {Blackjack.calcPoint(this.props.cards)}</span>
+    let emotion = '🤔';
+    let message = 'Hit or Stand';
 
-    if (result === 'win') return <div className="player__result player__result--win">You won <span aria-label="you are cool" role="img">😎</span>{score}</div>;
+    if (result === 'win')  {emotion = '😎'; message = 'You Won!';}
+    if (result === 'lose') {emotion = '😱'; message = 'You Lost';}
+    if (result === 'draw') {emotion = '😐'; message = 'You Drew';}
 
-    if (result === 'lose') return <div className="player__result player__result--lose">You lost <span aria-label="you feel bad" role="img">😱</span> {score}</div>;
-
-    if (result === 'draw') return <div className="player__result player__result--draw">You drew <span aria-label="you feel nothing" role="img">😐</span> {score}</div>;
-
-    return <div className="player__result player__result--yet">hit or stand <span aria-label="you are thinking" role="img">🤔</span>{score}</div>;
+    return <div className="player__result player__result--yet"> <span aria-label="emoticon" role="img">{emotion}</span>{score} {message}</div>;
   }
 }
 
