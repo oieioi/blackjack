@@ -16,10 +16,10 @@ export default class Card extends Component {
 
   suit(suitStr) {
     const suits = {
-      d: "♦️",
-      s: "♠️",
-      h: "♥️",
-      c: "♣️"
+      d: "♦",
+      s: "♠",
+      h: "♥",
+      c: "♣"
     };
     return <span className={`card__suit card__suit--${suitStr}`}>{suits[suitStr]}</span>;
   }
