@@ -26,6 +26,12 @@ class App extends Component {
       <div className="app">
         <Battle changed={this.applyBattle.bind(this)} />
         <Results results={this.state.results}/>
+        <a href="https://github.com/oieioi/blackjack">
+          <img
+            style={{position: 'fixed', bottom: 0, right: 0, border: 0, transform: 'rotate(180deg)'}}
+            src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png"
+            alt="Fork me on GitHub" />
+          </a>
       </div>
     );
   }
