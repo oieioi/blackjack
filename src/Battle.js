@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import BattleAPI from './lib/BattleAPI';
 import Player from './Player';
 import Dealer from './Dealer';
-import  './Battle.css';
+import './Button.css'
+import './Battle.css';
 
 export default class Battle extends Component {
   constructor(props) {
@@ -62,9 +63,10 @@ export default class Battle extends Component {
     />)
     return (
       <div className="battle">
-        <h2>Blackjack !</h2>
-        <button onClick={this.start.bind(this)}>start battle!!</button>
-        <div className="battle-cards"> battleID : {this.state.id} </div>
+        <h2>👉 Blackjack 🧠</h2>
+        <button
+          className="battle__start-button btn btn--long"
+          onClick={this.start.bind(this)}>Restart Battle 🚀</button>
         <Dealer cards={this.state.dealer.cards} />
         {players}
       </div>

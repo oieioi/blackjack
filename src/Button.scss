@@ -1,0 +1,23 @@
+.btn {
+  font-size: 1.5em;
+  margin: 5px;
+  border-radius: 5px;
+  width: 100px;
+  padding: 10px;
+  cursor: pointer;
+  &--long {
+    width: 200px;
+  }
+  &:disabled{
+    cursor: not-allowed;
+    background-color: #ddd;
+  }
+  &--next {
+    color: black;
+    background-color: #62d6b7aa;
+  }
+  &--danger {
+    color: black;
+    background-color: #ce50508a;
+  }
+}

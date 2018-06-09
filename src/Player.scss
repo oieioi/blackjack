@@ -1,43 +1,25 @@
 .player {
   clear: both;
   &__operations {
-    &-button {
-      font-size: 1.5em;
-      margin: 5px;
-      border-radius: 5px;
-      width: 100px;
-      padding: 10px;
-      cursor: pointer;
-      &:disabled{
-        cursor: not-allowed;
-        background-color: #ddd;
-      }
-      &--hit {
-        color: white;
-        background-color: blue;
-      }
-      &--stand {
-        color: white;
-        background-color: red;
-      }
-    }
   }
   &__result {
-    font-weight: bold;
-    font-size: 3em;
-    display: inline;
-    padding: 10px;
+    font-size: 1.2em;
+    display: block;
+    padding: 2px 10px;
     &--win {
-      color: #00ff00;
-      background-color: #ff00ff;
+      //color: #00ff00;
+      //background-color: #ff00ff;
     }
     &--lose {
-      color: #ff00ff;
-      background-color: #00ff00;
+      //color: white ;
+      //background-color: black;
     }
     &--draw {
-      color: white ;
-      background-color: black;
+      //color: white ;
+      //background-color: black;
+    }
+
+    &--yet {
     }
   }
 }
