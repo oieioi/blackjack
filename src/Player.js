@@ -11,7 +11,9 @@ export default class Player extends Component {
     return (
       <div className="player">
         <h3 className="player__name">You</h3>
-        {result}
+        <div className="player__state">
+          {result}
+        </div>
         <div className="player__operations">
           <button
             className="btn btn--next"
@@ -22,21 +24,21 @@ export default class Player extends Component {
             onClick={this.props.stand}
             disabled={!doing}>Stand</button>
         </div>
-        <div className="player__score">score: {Blackjack.calcPoint(this.props.cards)}</div>
         <Cards cards={this.props.cards} />
       </div>
     );
   }
 
   getResult(result) {
+    const score = <span className="player__result-score">score: {Blackjack.calcPoint(this.props.cards)}</span>
 
-    if (result === 'win') return <div className="player__result player__result--win">You won 😎 </div>;
+    if (result === 'win') return <div className="player__result player__result--win">You won <span aria-label="you are cool" role="img">😎</span>{score}</div>;
 
-    if (result === 'lose') return <div className="player__result player__result--lose">You lose 😱 </div>;
+    if (result === 'lose') return <div className="player__result player__result--lose">You lost <span aria-label="you feel bad" role="img">😱</span> {score}</div>;
 
-    if (result === 'draw') return <div className="player__result player__result--draw">You draw 😐 </div>;
+    if (result === 'draw') return <div className="player__result player__result--draw">You drew <span aria-label="you feel nothing" role="img">😐</span> {score}</div>;
 
-    return <div className="player__result player__result--yet">hit or stand 🤔</div>;
+    return <div className="player__result player__result--yet">hit or stand <span aria-label="you are thinking" role="img">🤔</span>{score}</div>;
   }
 }
 

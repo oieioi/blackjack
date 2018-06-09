@@ -66,10 +66,12 @@ export default class Battle extends Component {
     />)
     return (
       <div className="battle">
-        <h2>👉 Blackjack 🧠</h2>
+        <h2><span role="img" aria-label="">👉</span> Blackjack <span role="img" aria-label="brain">🧠</span></h2>
         <button
           className="battle__start-button btn btn--long"
-          onClick={this.start.bind(this)}>Restart Battle 🚀</button>
+          onClick={this.start.bind(this)}
+          disabled={this.state.state === 'doing'}
+        >Restart Battle <span role="img" aria-label="launch">🚀</span></button>
         <Dealer cards={this.state.dealer.cards} />
         {players}
       </div>
