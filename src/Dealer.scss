@@ -1,8 +1,13 @@
 .dealer {
   clear: both;
+  &__name {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+  }
   &__state {
     font-size: 1.2em;
-    display: block;
+    display: inline-block;
     padding: 2px 10px;
     &-score {
       font-size: 0.6em;

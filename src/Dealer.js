@@ -8,7 +8,7 @@ export default class Dealer extends Component {
   render() {
     return (
       <div className="dealer">
-        <h3>Dealer</h3>
+        <h3 className="dealer__name">Dealer</h3>
         <div className="dealer__state">
           {this.getState(this.props.cards)}
         </div>
