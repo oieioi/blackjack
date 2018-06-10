@@ -67,8 +67,18 @@ export default class Battle extends Component {
     />)
     const brains = new Array(this.state.brainCount).fill('🧠').join('')
     return (
-      <div className="battle">
-        <h2><span role="img" aria-label="">🐙</span>Blackjack<span
+      <div
+        className="battle"
+        onKeyDown={this.handleKeyPress.bind(this)}
+        tabIndex="0"
+      >
+        <h2>
+          <span
+            role="img"
+            aria-label="help"
+            style={{cursor: 'pointer'}}
+            onClick={this.help.bind(this)}
+          >🐙</span>Blackjack<span
             role="img"
             aria-label="brain"
             style={{cursor: 'pointer'}}
@@ -86,5 +96,32 @@ export default class Battle extends Component {
 
   addBrain(){
     this.setState(Object.assign(this.state, {brainCount: this.state.brainCount + 1}))
+  }
+
+  // TODO: キーボードショートカット
+  // どこに書くべきなんだろう？ tabindexがないといけないのも気持ち悪い
+  async handleKeyPress(e) {
+    // j, h
+    if (e.keyCode === 74|| e.keyCode === 72) {
+      if (this.state.state === 'doing') {
+        // TODO: playerId対応
+        this.hit(0);
+      } else {
+        this.start();
+      }
+    }
+
+    // k, s
+    if (e.keyCode === 75|| e.keyCode === 83) {
+      this.stand(0);
+    }
+  }
+
+  help() {
+    alert(`
+      hit: "h" or "j"
+      stand: "k" or "s"
+      restart: "h" or "j" (only if the game is over)
+      `);
   }
 }
