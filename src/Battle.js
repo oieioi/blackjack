@@ -51,6 +51,7 @@ export default class Battle extends Component {
   }
 
   async componentDidMount() {
+    document.addEventListener('keydown', this.handleKeyPress.bind(this), false)
     await this.start();
   }
 
@@ -67,27 +68,26 @@ export default class Battle extends Component {
     />)
     const brains = new Array(this.state.brainCount).fill('🧠').join('')
     return (
-      <div
-        className="battle"
-        onKeyDown={this.handleKeyPress.bind(this)}
-        tabIndex="0"
-      >
+      <div className="battle">
         <h2>
           <span
             role="img"
             aria-label="help"
             style={{cursor: 'pointer'}}
             onClick={this.help.bind(this)}
-          >🐙</span>Blackjack<span
+          >🐙</span>
+          <span className="battle__title">Blackjack</span>
+          <span
             role="img"
             aria-label="brain"
             style={{cursor: 'pointer'}}
-            onClick={this.addBrain.bind(this)}>{brains}</span></h2>
+            onClick={this.addBrain.bind(this)}>{brains}</span>
+        </h2>
         <button
           className="battle__start-button btn btn--long"
           onClick={this.start.bind(this)}
           disabled={this.state.state === 'doing'}
-        >Restart Battle <span role="img" aria-label="launch">🚀</span></button>
+        >Restart Battle<span role="img" aria-label="launch"></span></button>
         <Dealer cards={this.state.dealer.cards} />
         {players}
       </div>
@@ -99,7 +99,7 @@ export default class Battle extends Component {
   }
 
   // TODO: キーボードショートカット
-  // どこに書くべきなんだろう？ tabindexがないといけないのも気持ち悪い
+  // どこに書くべきなんだろう？
   async handleKeyPress(e) {
     // j, h
     if (e.keyCode === 74|| e.keyCode === 72) {
